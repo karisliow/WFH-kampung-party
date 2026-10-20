@@ -5,8 +5,8 @@
 <section id="game" class="hidden"><div class="card"><h2>Room <span id="roomCode"></span></h2><p class="status" id="status">Connecting…</p><div id="players"></div><div class="buttons"><button id="start" class="hidden">Start game</button><button id="roll" class="hidden">🎲 Roll dice</button></div><p id="lastRoll" class="muted"></p><div id="winner" class="celebrate"></div></div><div class="card"><h2>Race to Square 15 🏁</h2><div class="board" id="board"></div><p class="muted small">🪜 Ladders: 3→7, 8→12 · 🐍 Snakes: 11→6, 14→9</p></div></section><p class="muted small" style="text-align:center">Prototype v1 · No coins, shops or mini-games yet</p></main>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script>
 // REPLACE BOTH VALUES with your Supabase Project URL and publishable key.
-const SUPABASE_URL = 'https://YOUR-PROJECT.supabase.co';
-const SUPABASE_KEY = 'YOUR-PUBLISHABLE-KEY';
+const SUPABASE_URL = 'https://ciuuigjkqqrzrkcpputj.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_4-t4_rb18IBRa9nXeS97HA_YwR_kcOQ';
 const $=id=>document.getElementById(id), icons={merlion:'🦁',rickshaw:'🛺',bus:'🚌',dragon:'🐉'};
 let db,me,roomCode='',room=null,players=[],channel=null,lastMessage='';
 const error=e=>{$('error').textContent=e?.message||String(e);};
