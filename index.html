@@ -7,16 +7,29 @@
 .event-icon{font-size:6rem;line-height:1.1;animation:eventWiggle .7s ease-in-out infinite alternate}.event-heading{font-size:2rem;font-weight:950;margin:10px 0}.event-instruction{font-size:1.65rem;font-weight:850;line-height:1.3;margin:8px 0}.event-sub{font-size:1rem;color:#665c55;margin:12px 0 0}
 @keyframes eventPop{from{transform:scale(.35) rotate(-9deg);opacity:0}to{transform:scale(1);opacity:1}}@keyframes eventWiggle{from{transform:rotate(-9deg) translateY(2px)}to{transform:rotate(9deg) translateY(-6px)}}
 @media(prefers-reduced-motion:reduce){.event-card,.event-icon{animation:none}}
+
+/* Finish-line celebration: clear, large, accessible and dismissible. */
+.event-overlay.finish-event{background:#251b3bdc}.finish-event .event-card{position:relative;overflow:hidden;border-color:#ffc747;background:linear-gradient(160deg,#fff9d5,#ffe6f0);isolation:isolate}
+.finish-event .event-icon{font-size:5.5rem}.finish-event .event-heading{color:#8d3b6e;font-size:2.15rem}.finish-event .event-instruction{font-size:1.5rem}
+.finish-event .signature{font-size:1.3rem;font-weight:850;margin:12px 0;min-height:2em;animation:signaturePop .7s ease-in-out infinite alternate}
+.finish-event .finish-sign{font-size:2rem;font-weight:950;letter-spacing:.08em;background:#fff;border:3px dashed #b88034;border-radius:14px;padding:8px}
+.finish-event .dismiss-win{margin-top:16px;background:#814f9d;width:100%}
+.confetti-layer{position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:-1}.confetti-piece{position:absolute;top:-15%;left:var(--x);width:11px;height:17px;background:var(--c);border-radius:2px;animation:confettiFall var(--duration) linear var(--delay) infinite;transform:rotate(var(--r))}
+@keyframes confettiFall{to{top:115%;transform:translateX(var(--drift)) rotate(800deg)}}
+@keyframes signaturePop{to{transform:scale(1.09) rotate(2deg)}}
+@media(prefers-reduced-motion:reduce){.confetti-piece,.finish-event .signature{animation:none}.confetti-piece{top:20%}}
 </style></head><body><main class="wrap"><header><h1>🏮 Kampong Party</h1><div class="muted">Singapore Heritage Snakes & Ladders · Multiplayer Prototype</div></header><div id="error" role="alert"></div>
 <section class="card" id="setup"><h2>Join the adventure!</h2><label>Your nickname</label><input id="nickname" maxlength="20" placeholder="e.g. Ah Mei"><label>Choose your character</label><select id="character"><option value="merlion">🦁 Merlion</option><option value="rickshaw">🛺 Rickshaw</option><option value="bus">🚌 SBS Bus</option><option value="dragon">🐉 Dragon Playground</option></select><div class="buttons" style="margin-top:16px"><button id="create">Create room</button></div><label>Or enter a 6-digit room code</label><input id="code" maxlength="6" inputmode="numeric" placeholder="123456"><div class="buttons"><button class="secondary" id="join">Join room</button></div><p class="muted small">Each person uses their own phone. Maximum four players.</p></section>
-<section id="game" class="hidden"><div class="card"><h2>Room <span id="roomCode"></span></h2><p class="status" id="status">Connecting…</p><div id="players"></div><div class="dice-area"><div id="diceFace" class="dice-face" aria-label="Dice">⚀</div><div><strong id="diceTitle">Ready to roll!</strong><div id="diceNote" class="muted small">The dice will tumble before revealing the result.</div></div></div><div class="buttons"><button id="start" class="hidden">Start game</button><button id="roll" class="hidden">🎲 Roll dice</button><button id="endGame" class="secondary hidden">⏹ End game for everyone</button><button id="leaveGame" class="secondary">↩ Return to main menu</button></div><p id="lastRoll" class="muted"></p><div id="winner" class="celebrate"></div></div><div class="card"><h2>Race to Square 15 🏁</h2><div class="game-banner">🏮 Kampong Lane · 🛺 Heritage Adventure · 🚌</div><div class="board" id="board"></div><p class="muted small">🪜 Ladders: 3→7, 8→12 · 🐍 Snakes: 11→6, 14→9</p></div></section><p class="muted small" style="text-align:center">Prototype v1.4 · Snake & ladder pop-ups · No coins, shops or mini-games yet</p></main>
+<section id="game" class="hidden"><div class="card"><h2>Room <span id="roomCode"></span></h2><p class="status" id="status">Connecting…</p><div id="players"></div><div class="dice-area"><div id="diceFace" class="dice-face" aria-label="Dice">⚀</div><div><strong id="diceTitle">Ready to roll!</strong><div id="diceNote" class="muted small">The dice will tumble before revealing the result.</div></div></div><div class="buttons"><button id="start" class="hidden">Start game</button><button id="roll" class="hidden">🎲 Roll dice</button><button id="endGame" class="secondary hidden">⏹ End game for everyone</button><button id="leaveGame" class="secondary">↩ Return to main menu</button></div><p id="lastRoll" class="muted"></p><div id="winner" class="celebrate"></div></div><div class="card"><h2>Race to Square 15 🏁</h2><div class="game-banner">🏮 Kampong Lane · 🛺 Heritage Adventure · 🚌</div><div class="board" id="board"></div><p class="muted small">🪜 Ladders: 3→7, 8→12 · 🐍 Snakes: 11→6, 14→9</p></div></section><p class="muted small" style="text-align:center">Prototype v1.5 · Finish-line confetti and character victory moves · No coins, shops or mini-games yet</p></main>
 <div id="eventOverlay" class="event-overlay hidden" role="alertdialog" aria-live="assertive" aria-modal="true" aria-labelledby="eventHeading" aria-describedby="eventInstruction"><div class="event-card"><div id="eventIcon" class="event-icon" aria-hidden="true">🐍</div><div id="eventHeading" class="event-heading">OH NO!</div><div id="eventInstruction" class="event-instruction">Go back to Square 6!</div><div id="eventSub" class="event-sub">Landed on Square 11</div></div></div>
+<div id="finishOverlay" class="event-overlay finish-event hidden" role="alertdialog" aria-modal="true" aria-labelledby="finishHeading" aria-describedby="finishInstruction">
+<div class="event-card"><div id="confettiLayer" class="confetti-layer" aria-hidden="true"></div><div class="finish-sign">🏁 FINISH! 🏁</div><div id="finishIcon" class="event-icon" aria-hidden="true">🏆</div><div id="finishHeading" class="event-heading">WE HAVE A WINNER!</div><div id="finishInstruction" class="event-instruction"></div><div id="finishSignature" class="signature" aria-live="polite"></div><div class="event-sub">🎉 Congratulations! 🎉</div><button id="closeFinish" class="dismiss-win">Continue 🎊</button></div></div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script>
 // Public Supabase browser configuration (never put secret/service-role keys here).
 const SUPABASE_URL = 'https://ciuuigjkqqrzrkcpputj.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_4-t4_rb18IBRa9nXeS97HA_YwR_kcOQ';
 const $=id=>document.getElementById(id), icons={merlion:'🦁',rickshaw:'🛺',bus:'🚌',dragon:'🐉'};
-let db,me,roomCode='',room=null,players=[],channel=null,lastMessage='',lastSeenRoll=null,animating=false,movement=null,queuedRolls=[];const diceFaces=['⚀','⚁','⚂','⚃','⚄','⚅'];
+let db,me,roomCode='',room=null,players=[],channel=null,lastMessage='',lastSeenRoll=null,animating=false,movement=null,queuedRolls=[],shownWinnerId=null;const diceFaces=['⚀','⚁','⚂','⚃','⚄','⚅'];
 const error=e=>{const msg=e?.message||String(e);$('error').textContent=/kp_players_room_id_character_key|duplicate key.*character/i.test(msg)?'🎭 This character has already been chosen! Please select another character.':msg;};
 const clearError=()=>{$('error').textContent='';};
 const friendly=async(promise)=>{const {data,error:err}=await promise;if(err)throw err;return data;};
@@ -32,6 +45,31 @@ async function start(){try{clearError();await friendly(db.rpc('kp_start_game',{p
 const wait=ms=>new Promise(resolve=>setTimeout(resolve,ms));
 function showSquareEvent(landing,destination){const climb=destination>landing;const overlay=$('eventOverlay');overlay.classList.remove('hidden','snake-event','ladder-event');overlay.classList.add(climb?'ladder-event':'snake-event');$('eventIcon').textContent=climb?'🪜':'🐍';$('eventHeading').textContent=climb?'LUCKY YOU!':'OH NO!';$('eventInstruction').textContent=climb?`Move to Square ${destination}!`:`Go back to Square ${destination}!`;$('eventSub').textContent=`Landed on Square ${landing}`;}
 function hideSquareEvent(){$('eventOverlay').classList.add('hidden');}
+const signatureMoves={
+ merlion:{icon:'🦁',text:'🦁 ROAAAR! The lion roars!',notes:[196,164,131,98]},
+ rickshaw:{icon:'🛺',text:'🛺 RING RING! Rickshaw victory bell!',notes:[880,1174,880,1174]},
+ bus:{icon:'🚌',text:'🚌 BEEP BEEP! SBS Bus victory lights! 🚨✨',notes:[392,392,523,659]},
+ dragon:{icon:'🐉',text:'🐉 The Dragon Playground sparkles! ✨⭐',notes:[523,659,784,1047]}
+};
+let audioCtx;
+function victorySound(character){
+ // Web Audio requires a user gesture on some browsers; animation still works when muted.
+ try{const AC=window.AudioContext||window.webkitAudioContext;if(!AC)return;
+ audioCtx=audioCtx||new AC();if(audioCtx.state==='suspended')audioCtx.resume().catch(()=>{});
+ const now=audioCtx.currentTime,notes=signatureMoves[character]?.notes||signatureMoves.dragon.notes;
+ notes.forEach((freq,i)=>{const osc=audioCtx.createOscillator(),gain=audioCtx.createGain();osc.type=character==='merlion'?'sawtooth':character==='bus'?'square':'sine';osc.frequency.setValueAtTime(freq,now+i*.19);if(character==='merlion')osc.frequency.exponentialRampToValueAtTime(Math.max(55,freq*.58),now+i*.19+.25);gain.gain.setValueAtTime(.0001,now+i*.19);gain.gain.exponentialRampToValueAtTime(.075,now+i*.19+.03);gain.gain.exponentialRampToValueAtTime(.0001,now+i*.19+.27);osc.connect(gain);gain.connect(audioCtx.destination);osc.start(now+i*.19);osc.stop(now+i*.19+.28);});
+ }catch(e){/* Sound is optional. */}
+}
+function showFinishEvent(winner){if(!winner||shownWinnerId===winner.id)return;shownWinnerId=winner.id;
+ const move=signatureMoves[winner.character]||signatureMoves.dragon;
+ $('finishIcon').textContent=move.icon;$('finishInstruction').textContent=`${winner.nickname} wins Kampong Party!`;
+ $('finishSignature').textContent=move.text;
+ const layer=$('confettiLayer');layer.replaceChildren();const colors=['#f4b942','#ec7193','#65c6b0','#8a86e8','#f28d51'];
+ for(let i=0;i<55;i++){const bit=document.createElement('span');bit.className='confetti-piece';bit.style.setProperty('--x',`${(i*37)%100}%`);bit.style.setProperty('--c',colors[i%colors.length]);bit.style.setProperty('--delay',`${-(i%17)*.23}s`);bit.style.setProperty('--duration',`${2.2+(i%7)*.3}s`);bit.style.setProperty('--drift',`${(i%2?1:-1)*(20+i%45)}px`);bit.style.setProperty('--r',`${i*29}deg`);layer.append(bit);}
+ $('finishOverlay').classList.remove('hidden');victorySound(winner.character);
+}
+function hideFinishEvent(){$('finishOverlay').classList.add('hidden');}
+$('closeFinish').onclick=hideFinishEvent;
 function highlightSquare(square){document.querySelectorAll('.tile.moving').forEach(t=>t.classList.remove('moving'));const tile=document.querySelector(`[data-square="${square}"]`);if(tile){tile.classList.add('moving');tile.scrollIntoView({behavior:'smooth',block:'center',inline:'nearest'});}}
 async function playNextRoll(){if(animating||!queuedRolls.length)return;animating=true;const info=queuedRolls.shift();movement={player:info.player,square:info.from};render();
  const face=$('diceFace');let timer;
@@ -64,13 +102,14 @@ async function playNextRoll(){if(animating||!queuedRolls.length)return;animating
   $('diceNote').textContent=`Finished on Square ${info.to}!`;
   $('lastRoll').textContent=`${info.player} rolled ${info.roll}: square ${info.from} → ${info.to}`;
   await wait(700);
+  if(room?.status==='finished'&&room.winner_id){const winner=players.find(p=>p.id===room.winner_id);if(winner)showFinishEvent(winner);}
  }finally{
   if(timer)clearInterval(timer);hideSquareEvent();face.classList.remove('rolling');movement=null;animating=false;
   if(roomCode){render();if(queuedRolls.length)playNextRoll();}
  }
 }
 async function endGame(){try{if(!confirm('End this game for everyone? This cannot be undone.'))return;clearError();await friendly(db.rpc('kp_end_game',{p_code:roomCode}));await refresh();}catch(e){error(e);}}
-async function leaveGame(){if(room?.status!=='finished'&&!confirm('Return to the main menu? Your place in this room will remain saved.'))return;if(channel){await db.removeChannel(channel);channel=null;}sessionStorage.removeItem('kp_room');hideSquareEvent();roomCode='';room=null;players=[];lastSeenRoll=null;movement=null;queuedRolls=[];$('game').classList.add('hidden');$('setup').classList.remove('hidden');clearError();}
+async function leaveGame(){if(room?.status!=='finished'&&!confirm('Return to the main menu? Your place in this room will remain saved.'))return;if(channel){await db.removeChannel(channel);channel=null;}sessionStorage.removeItem('kp_room');hideSquareEvent();hideFinishEvent();shownWinnerId=null;roomCode='';room=null;players=[];lastSeenRoll=null;movement=null;queuedRolls=[];$('game').classList.add('hidden');$('setup').classList.remove('hidden');clearError();}
 async function roll(){try{clearError();$('roll').disabled=true;await friendly(db.rpc('kp_roll',{p_code:roomCode}));await refresh();}catch(e){error(e);}finally{if(!animating)$('roll').disabled=false;}}
 $('create').onclick=create;$('join').onclick=join;$('start').onclick=start;$('roll').onclick=roll;$('endGame').onclick=endGame;$('leaveGame').onclick=leaveGame;init();setInterval(()=>{if(roomCode)refresh();},2500);
 </script></body></html>
