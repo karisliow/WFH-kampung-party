@@ -26,7 +26,7 @@
 .mini-card h2{font-size:1.65rem}.mini-board{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin:15px 0}.mini-board button{font-size:2rem;min-height:66px;background:#f3e0ad;color:#3c3129;border:3px solid #d2ad66;padding:5px}.mini-board button:disabled{opacity:.5}.mini-board button.revealed{background:#b7e6d5}.mini-score{font-size:1.25rem;font-weight:900}.mini-info{background:#e9f5ee;border-radius:12px;padding:10px}.mini-cta{width:100%;margin:12px 0}.mini-sticks{grid-template-columns:repeat(5,1fr)}.mini-sticks button{font-size:1.8rem}.mini-stones{grid-template-columns:repeat(5,1fr)}.mini-stones button{font-size:1.6rem}.sticks-canvas{width:100%;height:auto;display:block;background:#f8e8c8;border:3px solid #cda96b;border-radius:18px;touch-action:manipulation}.stick-line{stroke-linecap:round;cursor:pointer}.stick-line:focus{outline:none}.stick-line:focus-visible .stick-core{stroke:#222}.practice-bar{display:flex;gap:10px;flex-wrap:wrap}.practice-bar button{flex:1}.mini-result{padding:10px;background:#f5e7fc;border-radius:12px;margin:8px 0}.mini-board button:focus-visible{outline:4px solid #345ed9}
 </style></head><body><main class="wrap"><header><h1>🏮 Kampong Party</h1><div class="muted">Singapore Heritage Snakes & Ladders · Multiplayer Prototype</div></header><div id="error" role="alert"></div>
 <section class="card" id="setup"><h2>Join the adventure!</h2><label>Your nickname</label><input id="nickname" maxlength="20" placeholder="e.g. Ah Mei"><label>Choose your character</label><select id="character"><option value="merlion">🦁 Merlion</option><option value="rickshaw">🛺 Rickshaw</option><option value="bus">🚌 SBS Bus</option><option value="dragon">🐉 Dragon Playground</option></select><div class="buttons" style="margin-top:16px"><button id="create">Create room</button></div><div class="buttons" style="margin-top:10px"><button id="practice" class="secondary">🎮 Try Mini-Games (Practice)</button></div><label>Or enter a 6-digit room code</label><input id="code" maxlength="6" inputmode="numeric" placeholder="123456"><div class="buttons"><button class="secondary" id="join">Join room</button></div><p class="muted small">Each person uses their own phone. Maximum four players.</p></section>
-<section id="game" class="hidden"><div class="card"><h2>Room <span id="roomCode"></span></h2><p class="status" id="status">Connecting…</p><div id="players"></div><div class="dice-area"><div id="diceFace" class="dice-face" aria-label="Dice">⚀</div><div><strong id="diceTitle">Ready to roll!</strong><div id="diceNote" class="muted small">The dice will tumble before revealing the result.</div></div></div><div class="buttons"><button id="start" class="hidden">Start game</button><button id="roll" class="hidden">🎲 Roll dice</button><button id="endGame" class="secondary hidden">⏹ End game for everyone</button><button id="leaveGame" class="secondary">↩ Return to main menu</button></div><p id="lastRoll" class="muted"></p><div id="winner" class="celebrate"></div></div><div class="card"><h2>Race to Square 15 🏁 · 🎮 Mini-games</h2><div class="game-banner">🏮 Kampong Lane · 🛺 Heritage Adventure · 🚌</div><div class="board" id="board"></div><p class="muted small">🪜 Ladders: 3→7, 8→12 · 🐍 Snakes: 11→6, 14→9 · 🎮 Mini-games: 5, 10, 13</p></div></section><p class="muted small" style="text-align:center">Prototype v1.6.1 · Practice menu and careful Pick-Up Sticks · Multiplayer heritage mini-games and coins · Shops coming next</p></main>
+<section id="game" class="hidden"><div class="card"><h2>Room <span id="roomCode"></span></h2><p class="status" id="status">Connecting…</p><div id="players"></div><div class="dice-area"><div id="diceFace" class="dice-face" aria-label="Dice">⚀</div><div><strong id="diceTitle">Ready to roll!</strong><div id="diceNote" class="muted small">The dice will tumble before revealing the result.</div></div></div><div class="buttons"><button id="start" class="hidden">Start game</button><button id="roll" class="hidden">🎲 Roll dice</button><button id="endGame" class="secondary hidden">⏹ End game for everyone</button><button id="leaveGame" class="secondary">↩ Return to main menu</button></div><p id="lastRoll" class="muted"></p><div id="winner" class="celebrate"></div></div><div class="card"><h2>Race to Square 15 🏁 · 🎮 Mini-games</h2><div class="game-banner">🏮 Kampong Lane · 🛺 Heritage Adventure · 🚌</div><div class="board" id="board"></div><p class="muted small">🪜 Ladders: 3→7, 8→12 · 🐍 Snakes: 11→6, 14→9 · 🎮 Mini-games: 5, 10, 13</p></div></section><p class="muted small" style="text-align:center">Prototype v1.6.2 · Randomised Pick-Up Sticks challenge · Multiplayer heritage mini-games and coins · Shops coming next</p></main>
 <div id="eventOverlay" class="event-overlay hidden" role="alertdialog" aria-live="assertive" aria-modal="true" aria-labelledby="eventHeading" aria-describedby="eventInstruction"><div class="event-card"><div id="eventIcon" class="event-icon" aria-hidden="true">🐍</div><div id="eventHeading" class="event-heading">OH NO!</div><div id="eventInstruction" class="event-instruction">Go back to Square 6!</div><div id="eventSub" class="event-sub">Landed on Square 11</div></div></div>
 <div id="finishOverlay" class="event-overlay finish-event hidden" role="alertdialog" aria-modal="true" aria-labelledby="finishHeading" aria-describedby="finishInstruction">
 <div class="event-card"><div id="confettiLayer" class="confetti-layer" aria-hidden="true"></div><div class="finish-sign">🏁 FINISH! 🏁</div><div id="finishIcon" class="event-icon" aria-hidden="true">🏆</div><div id="finishHeading" class="event-heading">WE HAVE A WINNER!</div><div id="finishInstruction" class="event-instruction"></div><div id="finishSignature" class="signature" aria-live="polite"></div><div class="event-sub">🎉 Congratulations! 🎉</div><button id="closeFinish" class="dismiss-win">Continue 🎊</button></div></div>
@@ -141,25 +141,39 @@ function renderMiniStart(game){
   if(game.type==='sticks')playSticks();else if(game.type==='stones')playStones();else playMatch();
  },'mini-cta'));
 }
-// Pick-Up Sticks: visible overlapping layers. Only sticks with nothing above them may be removed.
+// Pick-Up Sticks: randomized intersecting pile with local overlap dependencies.
 function playSticks(){
- miniHeader('🥢 Pick-Up Sticks','Look at the overlapping sticks. Tap a stick with NO other stick crossing over it. The topmost stick is safe! Take your time.');
- const ns='http://www.w3.org/2000/svg', svg=document.createElementNS(ns,'svg');svg.setAttribute('viewBox','0 0 360 330');svg.setAttribute('class','sticks-canvas');svg.setAttribute('role','group');svg.setAttribute('aria-label','Overlapping coloured pick-up sticks');$('miniContent').append(svg);
+ miniHeader('🥢 Pick-Up Sticks','Find a stick that has NO other stick lying across it. More than one may be free! Each new game has a different pile.');
+ const ns='http://www.w3.org/2000/svg',svg=document.createElementNS(ns,'svg');svg.setAttribute('viewBox','0 0 360 330');svg.setAttribute('class','sticks-canvas');svg.setAttribute('role','group');svg.setAttribute('aria-label','Scattered overlapping coloured pick-up sticks');$('miniContent').append(svg);
  const palette=['#e65d51','#3678b5','#4b9d63','#ae64b8','#e4a82b','#ef8050','#459b9c','#a84c69','#698cdb'];
- // Deliberately overlapping arrangement: all sticks cross near the middle, so the highest remaining layer is the safe choice.
- const sticks=Array.from({length:9},(_,i)=>{const angle=(-72+i*18)*Math.PI/180,dx=Math.cos(angle)*133,dy=Math.sin(angle)*133;return {i,x1:180-dx,y1:165-dy,x2:180+dx,y2:165+dy,active:true};});
+ const rand=(a,b)=>a+Math.random()*(b-a);
+ function crosses(a,b){
+  const orient=(p,q,r)=>(q.x-p.x)*(r.y-p.y)-(q.y-p.y)*(r.x-p.x);
+  const A={x:a.x1,y:a.y1},B={x:a.x2,y:a.y2},C={x:b.x1,y:b.y1},D={x:b.x2,y:b.y2};
+  return orient(A,B,C)*orient(A,B,D)<0&&orient(C,D,A)*orient(C,D,B)<0;
+ }
+ // Build small overlapping clusters, rather than one central intersection.
+ const sticks=[];
+ for(let i=0;i<9;i++){
+  const cluster=i%3,centerX=[102,251,177][cluster]+rand(-24,24),centerY=[102,132,244][cluster]+rand(-22,22);
+  const angle=rand(-Math.PI,Math.PI),length=rand(108,155),dx=Math.cos(angle)*length/2,dy=Math.sin(angle)*length/2;
+  sticks.push({i,x1:centerX-dx,y1:centerY-dy,x2:centerX+dx,y2:centerY+dy,active:true});
+ }
+ // Shuffle the stacking order so colour/position never reveals the next pick.
+ for(let i=sticks.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[sticks[i],sticks[j]]=[sticks[j],sticks[i]];}
  let attempts=0,success=0,score=0,locked=false;
- function update(){ $('miniScore').textContent=`${success}/9 collected · ${attempts}/12 attempts · ${score} points`; }
- function finish(){locked=true;const btn=miniButton('🏁 Finish and see score',()=>miniFinish(Math.min(100,score)),'mini-cta');$('miniContent').append(btn);}
- function choose(stick){if(locked||!stick.active)return;attempts++;const higher=sticks.some(other=>other.active&&other.i>stick.i);
-  if(higher){$('miniIntro').textContent='〰️ Wobble! Another stick is resting on that one. Look for the topmost stick.';svg.animate([{transform:'translateX(-3px)'},{transform:'translateX(3px)'},{transform:'translateX(0)'}],{duration:260});}
-  else{stick.active=false;success++;score+=10;$('miniIntro').textContent='✨ Nicely done! That stick was free. Which one is on top now?';const el=svg.querySelector(`[data-stick="${stick.i}"]`);if(el)el.remove();}
+ function update(){$('miniScore').textContent=`${success}/9 collected · ${attempts}/12 attempts · ${score} points`;}
+ function finish(){locked=true;$('miniContent').append(miniButton('🏁 Finish and see score',()=>miniFinish(Math.min(100,score)),'mini-cta'));}
+ function choose(stick){if(locked||!stick.active)return;attempts++;
+  const layer=sticks.indexOf(stick),blocked=sticks.some((other,j)=>other.active&&j>layer&&crosses(stick,other));
+  if(blocked){$('miniIntro').textContent='〰️ Wobble! A crossing stick is on top of that one. Try another!';if(svg.animate)svg.animate([{transform:'translateX(-3px)'},{transform:'translateX(3px)'},{transform:'translateX(0)'}],{duration:260});}
+  else{stick.active=false;success++;score+=10;$('miniIntro').textContent='✨ Nice pick! Look around: there may be several free sticks.';const el=svg.querySelector(`[data-stick="${stick.i}"]`);if(el){el.style.transition='opacity .25s';el.style.opacity='0';setTimeout(()=>el.remove(),260);}}
   update();if(success===9||attempts===12)finish();
  }
  sticks.forEach(stick=>{const g=document.createElementNS(ns,'g');g.setAttribute('class','stick-line');g.setAttribute('data-stick',stick.i);g.setAttribute('role','button');g.setAttribute('tabindex','0');g.setAttribute('aria-label',`Pick up ${['red','blue','green','purple','yellow','orange','teal','pink','light blue'][stick.i]} stick`);
   const makeLine=(stroke,width)=>{const line=document.createElementNS(ns,'line');for(const k of ['x1','y1','x2','y2'])line.setAttribute(k,stick[k]);line.setAttribute('stroke',stroke);line.setAttribute('stroke-width',width);line.setAttribute('stroke-linecap','round');g.append(line);return line;};
-  makeLine('#654329',18);const core=makeLine(palette[stick.i],13);core.setAttribute('class','stick-core');makeLine('#ffffff88',2.5);
-  const hit=makeLine('transparent',31);hit.setAttribute('pointer-events','stroke');g.addEventListener('click',()=>choose(stick));g.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();choose(stick);}});svg.append(g);
+  makeLine('#654329',15);const core=makeLine(palette[stick.i],10);core.setAttribute('class','stick-core');makeLine('#ffffff88',2);
+  const hit=makeLine('transparent',23);hit.setAttribute('pointer-events','stroke');g.addEventListener('click',()=>choose(stick));g.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();choose(stick);}});svg.append(g);
  });
  update();
 }
